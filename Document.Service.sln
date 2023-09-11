@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33603.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTest", "ConsoleAppTest\ConsoleAppTest.csproj", "{68C22369-5384-4ABD-88D5-1B33B9701339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Document.Service.Sample.Console", "ConsoleAppTest\Document.Service.Sample.Console.csproj", "{68C22369-5384-4ABD-88D5-1B33B9701339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Document.Service", "Document.Service\Document.Service.csproj", "{E1D8C959-4116-4A10-8178-9F7354BC978E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Document.Service", "Document.Service\Document.Service.csproj", "{E1D8C959-4116-4A10-8178-9F7354BC978E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
