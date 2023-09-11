@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<Title>Extension for install service</Title>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>aghili.mostafa@gmail.com</Authors>
+		<Description>Ability of manage application as windows service and access firewall with terminal commands.</Description>
+		<Copyright>aghili.mostafa@gmail.com</Copyright>
+		<PackageProjectUrl>https://github.com/aghili/Document.Service</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>firewall;rule;install;windows;service;</PackageTags>
+		<AssemblyVersion>0.13</AssemblyVersion>
+		<FileVersion>0.13</FileVersion>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<RepositoryUrl>https://github.com/aghili/Document.Service</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
+	</ItemGroup>
+
+</Project>

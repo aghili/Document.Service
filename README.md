@@ -10,10 +10,10 @@ This project supports Net6 and Net7, therefore, is compatible with Net6 and any 
 Even though it is possible to reference this library under Linux or Mac; it's obviously not going to work.
 
 ## How to get
-[![](https://img.shields.io/nuget/dt/Document.Service.svg?style=flat-square)](https://www.nuget.org/packages/Document.Service)
-[![](https://img.shields.io/nuget/v/Document.Service.svg?style=flat-square)](https://www.nuget.org/packages/Document.Service)
+[![](https://img.shields.io/nuget/dt/Document.Service.svg?style=flat-square)](https://www.nuget.org/packages/Aghili.Extensions.Service.Install)
+[![](https://img.shields.io/nuget/v/Document.Service.svg?style=flat-square)](https://www.nuget.org/packages/Aghili.Extensions.Service.Install)
 
-This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/Document.Service/).
+This library is available as a NuGet package at [nuget.org](https://www.nuget.org/packages/Aghili.Extensions.Service.Install/).
 
 ## Help me fund my own Death Star
 
