@@ -2,7 +2,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33603.86
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aghili.Extensions.Service.Install", "Aghili.Extensions.Service.Install\Aghili.Extensions.Service.Install.csproj", "{CAC14D85-1989-4E07-8157-16681ACDF917}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ma.Document.Service.Sample.Console", "Aghili.Extensions.Service.Sample.Console\Ma.Document.Service.Sample.Console.csproj", "{DE8E14FD-7784-4E7B-823D-AB31AC63D086}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAC14D85-1989-4E07-8157-16681ACDF917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC14D85-1989-4E07-8157-16681ACDF917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC14D85-1989-4E07-8157-16681ACDF917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC14D85-1989-4E07-8157-16681ACDF917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8E14FD-7784-4E7B-823D-AB31AC63D086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8E14FD-7784-4E7B-823D-AB31AC63D086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8E14FD-7784-4E7B-823D-AB31AC63D086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8E14FD-7784-4E7B-823D-AB31AC63D086}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
