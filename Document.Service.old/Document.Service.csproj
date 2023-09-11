@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\Mahak\Tools\MahakTray\Document.Service.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{19DA362A-DD95-4B3D-9E6B-6FF17151F78E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Document.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <ApplicationVersion>0.12.1.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Document\Service\AdministratorAccessNeedException.cs" />
+    <Compile Include="Document\Service\ActionArgument.cs" />
+    <Compile Include="Document\Service\ServiceResult.cs" />
+    <Compile Include="Document\Service\ServiceResultEventArg.cs" />
+    <Compile Include="Document\Service\Engine.cs" />
+    <Compile Include="Document\Service\EnCommand.cs" />
+    <Compile Include="Document\Service\EnArgument.cs" />
+    <Compile Include="Document\Service\Utilities\FirewallHelper.cs" />
+    <Compile Include="Document\Service\Utilities\FirewallHelperException.cs" />
+    <Compile Include="Document\Service\ApplicationTypes\EngineTypeApplication.cs" />
+    <Compile Include="Document\Service\ApplicationTypes\EngineTypeService.cs" />
+    <Compile Include="Document\Service\ApplicationTypes\IEngineType.cs" />
+    <Compile Include="NetFwTypeLib\INetFwAuthorizedApplication.cs" />
+    <Compile Include="NetFwTypeLib\INetFwAuthorizedApplications.cs" />
+    <Compile Include="NetFwTypeLib\INetFwMgr.cs" />
+    <Compile Include="NetFwTypeLib\INetFwPolicy.cs" />
+    <Compile Include="NetFwTypeLib\INetFwProfile.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
