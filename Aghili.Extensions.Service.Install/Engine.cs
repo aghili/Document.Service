@@ -1,4 +1,5 @@
 ﻿using Aghili.Extensions.Service.Install.ApplicationTypes;
+using Aghili.Extensions.Service.Install.Exceptions;
 using Aghili.Extensions.Service.Install.Register;
 using Aghili.Extensions.Service.Install.Utilities;
 using System.Reflection;
@@ -304,11 +305,11 @@ public class Engine
         return list;
     }
 
-    public void UnistallAndInstallServiceASync()
+    public void UninstallAndInstallServiceASync()
     {
         new Thread((ThreadStart)delegate
         {
-            UnistallAndInstallService();
+            UninstallAndInstallService();
         }).Start();
     }
 
@@ -328,9 +329,8 @@ public class Engine
         }).Start();
     }
 
-    public ServiceResult UnistallAndInstallService()
+    public ServiceResult UninstallAndInstallService()
     {
-        //IL_0045: Unknown result type (might be due to invalid IL or missing references)
         ServiceResult serviceResult = new ServiceResult
         {
             ServiceIsInstalled = false,
@@ -374,24 +374,24 @@ public class Engine
 
     private ServiceResult ServiceInstall()
     {
-        new WindowsServices(new Register.WindowsService.WindowsServiceInformation(Environment.ProcessPath, ServiceName)).Install();
+        new WindowsService(new Register.WindowsServices.WindowsServiceInformation(ApplicationInfo.ProcessPath, ServiceName)).Install();
 
         return ServiceStatus();
     }
 
     public ServiceResult ServiceStatus()
     {
-        //IL_0026: Unknown result type (might be due to invalid IL or missing references)
         try
         {
+            var Service = new FirewallService();
             Result.ServiceIsInstalled = sc != null;
             Result.ServiceRunStatus = (ServiceControllerStatus)((sc == null) ? 1 : ((int)sc.Status));
-            Result.FirewallIsEnable = FirewallHelper.Instance.IsFirewallEnabled;
-            Result.FirewallIsInstall = FirewallHelper.Instance.IsFirewallInstalled;
-            Result.AppAuthorizationsAllowed = FirewallHelper.Instance.AppAuthorizationsAllowed;
+            Result.FirewallIsEnable = Service.IsFirewallEnabled;
+            Result.FirewallIsInstall = Service.IsFirewallInstalled;
+            Result.AppAuthorizationsAllowed = Service.AppAuthorizationsAllowed;
             try
             {
-                Result.FirewallRuleAdded = FirewallHelper.Instance.HasAuthorization(Environment.ProcessPath);
+                Result.FirewallRuleAdded = Service.HasAuthorization(ApplicationInfo.ProcessPath);
             }
             catch (Exception ex)
             {
@@ -411,8 +411,6 @@ public class Engine
 
     private ServiceResult ServiceUninstall()
     {
-        //IL_000e: Unknown result type (might be due to invalid IL or missing references)
-        //IL_0014: Invalid comparison between Unknown and I4
         if (sc != null)
         {
             if ((int)sc.Status != 1)
@@ -421,7 +419,7 @@ public class Engine
                 sc.WaitForStatus((ServiceControllerStatus)1);
             }
 
-            new WindowsServices(new Register.WindowsService.WindowsServiceInformation(Environment.ProcessPath, ServiceName)).Uninstall();
+            new WindowsService(new Register.WindowsServices.WindowsServiceInformation(ApplicationInfo.ProcessPath, ServiceName)).Uninstall();
 
         }
 
@@ -430,9 +428,6 @@ public class Engine
 
     public ServiceResult ServiceStop()
     {
-        //IL_0025: Unknown result type (might be due to invalid IL or missing references)
-        //IL_002b: Invalid comparison between Unknown and I4
-        //IL_005d: Unknown result type (might be due to invalid IL or missing references)
         Result.ServiceIsInstalled = sc != null;
         if (Result.ServiceIsInstalled)
         {
@@ -460,9 +455,6 @@ public class Engine
 
     public ServiceResult ServiceStart()
     {
-        //IL_0025: Unknown result type (might be due to invalid IL or missing references)
-        //IL_002b: Invalid comparison between Unknown and I4
-        //IL_005d: Unknown result type (might be due to invalid IL or missing references)
         Result.ServiceIsInstalled = sc != null;
         if (Result.ServiceIsInstalled)
         {
@@ -490,11 +482,16 @@ public class Engine
 
     public ServiceResult FirewallAdd()
     {
-        if (!FirewallHelper.Instance.HasAuthorization(Environment.ProcessPath))
-        {
-            FirewallHelper.Instance.GrantAuthorization(Environment.ProcessPath, _application.Name);
-        }
+        var Service = new FirewallService();
+        if (!Service.HasAuthorization(ApplicationInfo.ProcessPath))
+            try
+            {
+                Service.GrantAuthorization(ApplicationInfo.ProcessPath, _application.Name);
+            }
+            catch (ExceptionFirewallHelper)
+            {
 
+            }
         try
         {
             Result = ServiceStatus();
@@ -509,9 +506,10 @@ public class Engine
 
     public ServiceResult FirewallRemove()
     {
-        if (FirewallHelper.Instance.HasAuthorization(Environment.ProcessPath))
+        var Service = new FirewallService();
+        if (Service.HasAuthorization(ApplicationInfo.ProcessPath))
         {
-            FirewallHelper.Instance.RemoveAuthorization(Environment.ProcessPath);
+            Service.RemoveAuthorization(ApplicationInfo.ProcessPath);
         }
 
         try

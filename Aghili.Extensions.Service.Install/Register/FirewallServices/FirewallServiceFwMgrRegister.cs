@@ -4,108 +4,86 @@ using System.Collections;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Aghili.Extensions.Service.Install.Utilities;
+namespace Aghili.Extensions.Service.Install.Register.FirewallServices;
 
-public class FirewallHelper
+internal class FirewallServiceFwMgrRegister : IFirewallServiceRegister
 {
-    private static FirewallHelper instance;
+    private static INetFwMgr? _fwMgr = null;
 
-    private INetFwMgr fwMgr;
+    public FirewallServiceFwMgrRegister()
+    {
+    }
 
-    public static FirewallHelper Instance
+    private static INetFwMgr FwMgr
     {
         get
         {
-            lock (typeof(FirewallHelper))
+            return _fwMgr ??= new Func<INetFwMgr>(() =>
             {
-                if (instance == null)
+                Type typeFromProgID = Type.GetTypeFromProgID("HNetCfg.FwMgr", throwOnError: false);
+                _fwMgr = null;
+                if (typeFromProgID != null)
                 {
-                    instance = new FirewallHelper();
+                    try
+                    {
+                        _fwMgr = (INetFwMgr)Activator.CreateInstance(typeFromProgID);
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+                    catch (NotSupportedException)
+                    {
+                    }
+                    catch (TargetInvocationException)
+                    {
+                    }
+                    catch (MissingMethodException)
+                    {
+                    }
+                    catch (MethodAccessException)
+                    {
+                    }
+                    catch (MemberAccessException)
+                    {
+                    }
+                    catch (InvalidComObjectException)
+                    {
+                    }
+                    catch (COMException)
+                    {
+                    }
+                    catch (TypeLoadException)
+                    {
+                    }
                 }
-
-                return instance;
-            }
+                return _fwMgr;
+            }).Invoke();
         }
     }
 
-    public bool IsFirewallInstalled
+    public static bool IsReady
     {
-        get
-        {
-            if (fwMgr != null && fwMgr.LocalPolicy != null && fwMgr.LocalPolicy.CurrentProfile != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        get { return FwMgr != null && GetFirewallInstallStatus() && GetAppAuthorizationsAllowedStatus(); }
     }
 
-    public bool IsFirewallEnabled
+    private static bool GetFirewallInstallStatus()
     {
-        get
-        {
-            if (IsFirewallInstalled && fwMgr.LocalPolicy.CurrentProfile.FirewallEnabled)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        return FwMgr != null && FwMgr.LocalPolicy != null && FwMgr.LocalPolicy.CurrentProfile != null;
     }
-
-    public bool AppAuthorizationsAllowed
+    private static bool GetFirewallEnableStatus()
     {
-        get
-        {
-            if (IsFirewallInstalled && !fwMgr.LocalPolicy.CurrentProfile.ExceptionsNotAllowed)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        return GetFirewallInstallStatus() && FwMgr.LocalPolicy.CurrentProfile.FirewallEnabled;
     }
-
-    private FirewallHelper()
+    private static bool GetAppAuthorizationsAllowedStatus()
     {
-        Type typeFromProgID = Type.GetTypeFromProgID("HNetCfg.FwMgr", throwOnError: false);
-        fwMgr = null;
-        if (typeFromProgID != null)
-        {
-            try
-            {
-                fwMgr = (INetFwMgr)Activator.CreateInstance(typeFromProgID);
-            }
-            catch (ArgumentException)
-            {
-            }
-            catch (NotSupportedException)
-            {
-            }
-            catch (TargetInvocationException)
-            {
-            }
-            catch (MissingMethodException)
-            {
-            }
-            catch (MethodAccessException)
-            {
-            }
-            catch (MemberAccessException)
-            {
-            }
-            catch (InvalidComObjectException)
-            {
-            }
-            catch (COMException)
-            {
-            }
-            catch (TypeLoadException)
-            {
-            }
-        }
+        return GetFirewallInstallStatus() && !FwMgr.LocalPolicy.CurrentProfile.ExceptionsNotAllowed;
     }
+
+    public bool IsFirewallInstalled => GetFirewallInstallStatus();
+
+    public bool IsFirewallEnabled => GetFirewallEnableStatus();
+
+    public bool AppAuthorizationsAllowed => GetAppAuthorizationsAllowedStatus();
 
     public void GrantAuthorization(string applicationFullPath, string appName)
     {
@@ -169,7 +147,7 @@ public class FirewallHelper
 
         netFwAuthorizedApplication.Name = appName;
         netFwAuthorizedApplication.ProcessImageFileName = applicationFullPath;
-        fwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Add(netFwAuthorizedApplication);
+        FwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Add(netFwAuthorizedApplication);
     }
 
     public void RemoveAuthorization(string applicationFullPath)
@@ -182,7 +160,7 @@ public class FirewallHelper
 
         if (HasAuthorization(applicationFullPath))
         {
-            fwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Remove(applicationFullPath);
+            FwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Remove(applicationFullPath);
         }
     }
 
@@ -246,7 +224,7 @@ public class FirewallHelper
         }
 
         ArrayList arrayList = new ArrayList();
-        foreach (INetFwAuthorizedApplication authorizedApplication in fwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications)
+        foreach (INetFwAuthorizedApplication authorizedApplication in FwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications)
         {
             arrayList.Add(authorizedApplication.ProcessImageFileName);
         }

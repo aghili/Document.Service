@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using System.Text.Json;
 
 namespace Aghili.Extensions.Service.Install;
 
@@ -15,7 +16,7 @@ public class ServiceResult
 
     public bool FirewallIsEnable { set; get; }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = "";
 
     public bool Result { get; set; }
 
@@ -25,5 +26,5 @@ public class ServiceResult
 
     internal string ToSerialize() => throw new NotImplementedException();
 
-    internal string ToStringJson() => "{" + string.Format("\"ServiceRunStatus\":\"{0}\",", (object)this.ServiceRunStatus) + string.Format("\"ServiceIsInstalled\":{0},", (object)this.ServiceIsInstalled) + string.Format("\"FirewallIsInstall\":{0},", (object)this.FirewallIsInstall) + string.Format("\"FirewallIsEnable\":{0},", (object)this.FirewallIsEnable) + string.Format("\"FirewallRuleAdded\":{0},", (object)this.FirewallRuleAdded) + "\"Message\":\"" + this.Message + "\"," + string.Format("\"Result\":{0}", (object)this.Result) + "}";
-}
+    internal string ToStringJson() => JsonSerializer.Serialize(this);
+    }

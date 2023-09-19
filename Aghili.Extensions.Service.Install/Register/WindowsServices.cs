@@ -1,14 +1,14 @@
 ﻿using Aghili.Extensions.Service.Install.Exceptions;
-using Aghili.Extensions.Service.Install.Register.WindowsService;
+using Aghili.Extensions.Service.Install.Register.WindowsServices;
 
 namespace Aghili.Extensions.Service.Install.Register;
 
-public class WindowsServices
+public class WindowsService
 {
     private readonly WindowsServiceInformation windowsServiceInformation;
     private IWindowsServiceRegister InstallerEngine { get; }
 
-    public WindowsServices(WindowsServiceInformation windowsServiceInformation)
+    public WindowsService(WindowsServiceInformation windowsServiceInformation)
     {
         if (WindowsServiceRegisterSc.IsReady)
         {

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "ConsoleAppTest": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "fa"
     }
   }
 }

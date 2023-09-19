@@ -5,7 +5,11 @@
 
 A class library to manage the Windows Firewall as well as adding your program to the Windows Firewall Exception list.
 
-This project supports Net6 and Net7, therefore, is compatible with Net6 and any version of dotNet equal or greater than it
+For Manage Windows Service application this package can used SC or Dotnet4 Tools.
+
+For manage Windows firewall we also used Netsh Command.
+
+This project supports (.netStandard2.1 , Net6 and Net7), therefore, is compatible with Net6 and any version of dotNet equal or greater than it
 
 Even though it is possible to reference this library under Linux or Mac; it's obviously not going to work.
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;net6.0;net7.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
@@ -12,9 +12,9 @@
 		<Copyright>aghili.mostafa@gmail.com</Copyright>
 		<PackageProjectUrl>https://github.com/aghili/Document.Service</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>firewall;rule;install;windows;service;</PackageTags>
-		<AssemblyVersion>0.13</AssemblyVersion>
-		<FileVersion>0.13</FileVersion>
+		<PackageTags>firewall;rule;install;windows;service;SC</PackageTags>
+		<AssemblyVersion>1.0</AssemblyVersion>
+		<Version>1.2</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<RepositoryUrl>https://github.com/aghili/Document.Service</RepositoryUrl>
@@ -32,7 +32,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
+		<COMReference Include="NetFwTypeLib">
+			<WrapperTool>tlbimp</WrapperTool>
+			<VersionMinor>0</VersionMinor>
+			<VersionMajor>1</VersionMajor>
+			<Guid>58fbcf7c-e7a9-467c-80b3-fc65e8fcca08</Guid>
+			<Lcid>0</Lcid>
+			<Isolated>false</Isolated>
+			<EmbedInteropTypes>true</EmbedInteropTypes>
+		</COMReference>
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework.Contains(netstandard))'=='True'">
+		<PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+		<PackageReference Include="System.Text.Json" Version="7.0.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
+	</ItemGroup>
+	
 </Project>
