@@ -1,6 +1,6 @@
-﻿namespace Aghili.Extensions.Service.Install.Register.WindowsService;
+﻿namespace Aghili.Extensions.Service.Install.Register.WindowsServices;
 
-public enum WindowsServiceResult
+public enum EnWindowsServiceResult
 {
     SUCCESS = 0,
     FAILURE_ACCESS_IS_DENIED = 5,

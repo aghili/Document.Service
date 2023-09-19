@@ -1,4 +1,4 @@
-﻿namespace Aghili.Extensions.Service.Install.Register.WindowsService;
+﻿namespace Aghili.Extensions.Service.Install.Register.WindowsServices;
 
 public interface IWindowsServiceRegister
 {

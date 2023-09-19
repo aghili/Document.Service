@@ -1,7 +1,7 @@
 ﻿using Aghili.Extensions.Service.Install.Exceptions;
 using System.Diagnostics;
 
-namespace Aghili.Extensions.Service.Install.Register.WindowsService;
+namespace Aghili.Extensions.Service.Install.Register.WindowsServices;
 
 public class WindowsServiceRegisterDotNet4 : IWindowsServiceRegister
 {
@@ -32,11 +32,10 @@ public class WindowsServiceRegisterDotNet4 : IWindowsServiceRegister
         int num = list.IndexOf("An exception occurred during the Install phase.");
         if (num > -1)
         {
-            string text = list[num + 1];
-            string text2 = text;
-            if (!(text2 == "System.InvalidOperationException: Cannot open Service Control Manager on computer '.'. This operation might require other privileges."))
+            string result = list[num + 1];
+            if (!(result == "System.InvalidOperationException: Cannot open Service Control Manager on computer '.'. This operation might require other privileges."))
             {
-                if (text2 == "System.ComponentModel.Win32Exception: The specified service already exists")
+                if (result == "System.ComponentModel.Win32Exception: The specified service already exists")
                 {
                     throw new ExceptionServiceIsExist("Service exists,unistall processed.");
                 }
