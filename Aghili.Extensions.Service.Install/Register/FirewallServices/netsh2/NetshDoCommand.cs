@@ -3,11 +3,11 @@ using System.Diagnostics;
 
 namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2;
 
-public class Netsh2DoCommand<T>
+public class NetshDoCommand<T>
 {
     private static readonly string programEngineFIlename = "NETSH.EXE";
 
-    private static Netsh2GeneralResult ServiceCommand(string command)
+    private static NetshGeneralResult ServiceCommand(string command)
     {
         Process process = new Process();
         process.StartInfo.RedirectStandardOutput = true;
@@ -24,12 +24,12 @@ public class Netsh2DoCommand<T>
         //string[] array = text.Split(new char[2] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
         //string message = ((array.Length < 2) ? "" : string.Join(Environment.NewLine, array.Skip(1).ToArray()));
 
-        return new Netsh2GeneralResult(exitCode, text);
+        return new NetshGeneralResult(exitCode, text);
     }
 
     private Netsh2BaseCommand parent;
 
-    public Netsh2DoCommand(Netsh2BaseCommand parent)
+    public NetshDoCommand(Netsh2BaseCommand parent)
     {
         this.parent = parent;
     }

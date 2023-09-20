@@ -1,9 +1,9 @@
 ﻿namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2;
 
-public class Netsh2ShowResult: Netsh2GeneralResult
+public class NetshShowResult: NetshGeneralResult
 {
     const String Pattern = "^(?<rulename>\\r\\n)|(?<key>.+): \\s+ (?<value>.+)$";
-    public Netsh2ShowResult(Netsh2GeneralResult result) :base(result.ExitCode,result.Message)
+    public NetshShowResult(NetshGeneralResult result) :base(result.ExitCode,result.Message)
     {
         switch (Result)
         {
@@ -28,9 +28,9 @@ public class Netsh2ShowResult: Netsh2GeneralResult
         var models_properties = Utilities.ModelExtention.GetModelProperties(Pattern, Message,"rulename");
         foreach (var row in models_properties)
         {
-            Rules.Add(new Netsh2ShowRuleResult(row));
+            Rules.Add(new NetshShowRuleResult(row));
         }
     }
 
-    public List<Netsh2ShowRuleResult> Rules { get; private set; } = new();
+    public List<NetshShowRuleResult> Rules { get; private set; } = new();
 }

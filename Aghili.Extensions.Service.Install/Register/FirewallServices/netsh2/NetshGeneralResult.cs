@@ -1,10 +1,10 @@
 ﻿namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2;
 
 [Serializable]
-public class Netsh2GeneralResult
+public class NetshGeneralResult
 {
-    public Netsh2GeneralResult(Netsh2GeneralResult result):this(result.ExitCode,result.Message) { }
-    public Netsh2GeneralResult(int exitCode, string message)
+    public NetshGeneralResult(NetshGeneralResult result):this(result.ExitCode,result.Message) { }
+    public NetshGeneralResult(int exitCode, string message)
     {
         this.ExitCode = exitCode;
         if (exitCode == 0)

@@ -4,15 +4,15 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2;
 
-public class Netsh2AdvFirewallCommand:Netsh2BaseCommand
+public class NetshAdvFirewallCommand:Netsh2BaseCommand
 {
-    public Netsh2AdvFirewallCommand(Netsh2BaseCommand parent):base(parent)
+    public NetshAdvFirewallCommand(Netsh2BaseCommand parent):base(parent)
     {
         parameters.Add("AdvFirewall", "");
     }
-    public Netsh2FirewallCommand Firewall()
+    public NetshFirewallCommand Firewall()
     {
-        return new Netsh2FirewallCommand(this);
+        return new NetshFirewallCommand(this);
     }
 
     public Netsh2ShowCommand Show()
@@ -27,28 +27,28 @@ public class Netsh2ShowCommand : Netsh2BaseCommand
     {
     }
 
-    public Netsh2DoCommand<Netsh2ShowProfilesResult> AllProfiles()
+    public NetshDoCommand<Netsh2ShowProfilesResult> AllProfiles()
     {
         parameters.Add("Show", "All");
-        return new Netsh2DoCommand<Netsh2ShowProfilesResult>(this);
+        return new NetshDoCommand<Netsh2ShowProfilesResult>(this);
     }
-    public Netsh2DoCommand<Netsh2ShowProfilesResult> Profile(EnFirewallProfile profile)
+    public NetshDoCommand<Netsh2ShowProfilesResult> Profile(EnFirewallProfile profile)
     {
         parameters.Add("Show", $"{profile}Profile");
-        return new Netsh2DoCommand<Netsh2ShowProfilesResult>(this);
+        return new NetshDoCommand<Netsh2ShowProfilesResult>(this);
     }
-    public Netsh2DoCommand<Netsh2ShowProfilesResult> CurrentProfile()
+    public NetshDoCommand<Netsh2ShowProfilesResult> CurrentProfile()
     {
         parameters.Add("Show", $"CurrentProfile");
-        return new Netsh2DoCommand<Netsh2ShowProfilesResult>(this);
+        return new NetshDoCommand<Netsh2ShowProfilesResult>(this);
     }
 }
 
-public class Netsh2ShowProfilesResult:Netsh2GeneralResult
+public class Netsh2ShowProfilesResult:NetshGeneralResult
 {
     const string Pattern = "^((?<profile>\\w+) Profile Settings:)|(?<key>.+) \\s+ (?<value>.+)$";//"(\\w*) Profile Settings:\\s-*\\s(((.*) \\s* (.*))\\s)*\\sLogging:\\s(((.*) \\s* (.*))\\s)*";
 
-    public Netsh2ShowProfilesResult(Netsh2GeneralResult result):base(result.ExitCode,result.Message)
+    public Netsh2ShowProfilesResult(NetshGeneralResult result):base(result.ExitCode,result.Message)
     {
         var models_properties = Utilities.ModelExtention.GetModelProperties(Pattern, Message, "profile",true);
 

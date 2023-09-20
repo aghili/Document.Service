@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh1;
 
-internal class FirewallServiceNetsh1Register : IFirewallServiceRegister
+internal class FirewallServiceNetshRegister : IFirewallServiceRegister
 {
     private static readonly string programEngineFilename = "NETSH.EXE";
     private static readonly string programEngineFilenameCategory = " firewall ";

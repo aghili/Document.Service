@@ -1,9 +1,9 @@
 ﻿using Aghili.Extensions.Service.Install.Exceptions;
 using System.Diagnostics;
 
-namespace Aghili.Extensions.Service.Install.Register.WindowsServices;
+namespace Aghili.Extensions.Service.Install.Register.WindowsServices.Dotnet;
 
-public class WindowsServiceRegisterDotNet4 : IWindowsServiceRegister
+public class WindowsServiceRegister : IWindowsServiceRegister
 {
     private static readonly string regasmfile = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\Microsoft.NET\\Framework\\v4.0.30319\\InstallUtil.exe";
 

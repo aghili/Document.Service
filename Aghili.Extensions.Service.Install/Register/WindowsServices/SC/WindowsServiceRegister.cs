@@ -1,9 +1,9 @@
 ﻿using Aghili.Extensions.Service.Install.Exceptions;
 using System.Diagnostics;
 
-namespace Aghili.Extensions.Service.Install.Register.WindowsServices;
+namespace Aghili.Extensions.Service.Install.Register.WindowsServices.SC;
 
-public class WindowsServiceRegisterSc : IWindowsServiceRegister
+public class WindowsServiceRegister : IWindowsServiceRegister
 {
     private static readonly string regasmfile = "SC.EXE";
 
@@ -19,7 +19,7 @@ public class WindowsServiceRegisterSc : IWindowsServiceRegister
         process.StartInfo.RedirectStandardError = true;
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.FileName = regasmfile;
-        process.StartInfo.Arguments = ((item.ServerName == null) ? "" : (item.ServerName + " "));
+        process.StartInfo.Arguments = item.ServerName == null ? "" : item.ServerName + " ";
         process.StartInfo.Arguments += $"{Action} ";
         process.StartInfo.Arguments += item.ServiceName + "  ";
         switch (Action)
@@ -29,9 +29,9 @@ public class WindowsServiceRegisterSc : IWindowsServiceRegister
                     process.StartInfo.Arguments += $"start={WindowsServiceInformation.MapToString(item.StartType)} ";
                     process.StartInfo.Arguments += item.ErrorType != null ? $"error= {item.ErrorType} " : "";
                     process.StartInfo.Arguments += $"binpath=\"{value} --contentRoot {ContentFolder}\" ";
-                    process.StartInfo.Arguments += ((item.Group == null) ? "" : ("group=" + item.Group + " "));
-                    process.StartInfo.Arguments += ((item.UserName == null) ? "" : ("obj=" + item.UserName + " "));
-                    process.StartInfo.Arguments += ((item.Password == null) ? "" : ("password=" + item.Password + " "));
+                    process.StartInfo.Arguments += item.Group == null ? "" : "group=" + item.Group + " ";
+                    process.StartInfo.Arguments += item.UserName == null ? "" : "obj=" + item.UserName + " ";
+                    process.StartInfo.Arguments += item.Password == null ? "" : "password=" + item.Password + " ";
                     break;
                 }
         }
@@ -41,7 +41,7 @@ public class WindowsServiceRegisterSc : IWindowsServiceRegister
         string text2 = process.StandardError.ReadToEnd();
         int exitCode = process.ExitCode;
         string[] array = text.Split(new char[2] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        string message = ((array.Length < 2) ? "" : string.Join(Environment.NewLine, array.Skip(1).ToArray()));
+        string message = array.Length < 2 ? "" : string.Join(Environment.NewLine, array.Skip(1).ToArray());
         return new WindowsServiceActionResult
         {
             Action = Action,

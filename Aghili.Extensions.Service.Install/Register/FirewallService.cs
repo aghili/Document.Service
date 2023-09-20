@@ -1,4 +1,6 @@
-﻿using Aghili.Extensions.Service.Install.Register.FirewallServices;
+﻿using Aghili.Extensions.Service.Install.Extensions;
+using Aghili.Extensions.Service.Install.Register.FirewallServices;
+using Aghili.Extensions.Service.Install.Register.FirewallServices.NetFwMgr;
 
 namespace Aghili.Extensions.Service.Install.Register;
 
@@ -9,7 +11,19 @@ public class FirewallService
     public bool IsFirewallEnabled => InstallerEngine.IsFirewallEnabled;
     public bool IsFirewallInstalled => InstallerEngine.IsFirewallInstalled;
     public bool AppAuthorizationsAllowed => InstallerEngine.AppAuthorizationsAllowed;
-    private IFirewallServiceRegister InstallerEngine => _InstallerEngine ??= FirewallServiceFwMgrRegister.IsReady ? new FirewallServiceFwMgrRegister() : new FirewallServices.netsh2.FirewallServiceNetsh2Register();
+    private IFirewallServiceRegister InstallerEngine
+    {
+        get
+        {
+            return _InstallerEngine ??=
+                  FirewallServiceRegister.IsReady ?
+                  new FirewallServiceRegister() :
+                  Environment.OSVersion.Version.RealWindowVersion().BuildNumber >= 7600 ?
+              new FirewallServices.netsh2.FirewallServiceNetshRegister() :
+              new FirewallServices.netsh1.FirewallServiceNetshRegister();
+        }
+    }
+
 
     internal void GrantAuthorization(string processPath, string name)
     {

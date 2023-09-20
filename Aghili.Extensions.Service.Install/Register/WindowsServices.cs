@@ -10,13 +10,13 @@ public class WindowsService
 
     public WindowsService(WindowsServiceInformation windowsServiceInformation)
     {
-        if (WindowsServiceRegisterSc.IsReady)
+        if (WindowsServices.SC.WindowsServiceRegister.IsReady)
         {
-            InstallerEngine = new WindowsServiceRegisterSc();
+            InstallerEngine = new WindowsServices.SC.WindowsServiceRegister();
         }
         else
         {
-            InstallerEngine = new WindowsServiceRegisterDotNet4();
+            InstallerEngine = new WindowsServices.Dotnet.WindowsServiceRegister();
         }
 
         this.windowsServiceInformation = windowsServiceInformation;

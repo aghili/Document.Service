@@ -2,14 +2,14 @@
 
 namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2;
 
-internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
+internal class FirewallServiceNetshRegister : IFirewallServiceRegister
 {
     public bool IsFirewallEnabled => FirewallEnabled();
 
     private bool FirewallEnabled()
     {
         var command =
-                     new Netsh2Command()
+                     new NetshCommand()
                      .AdvFirewall()
                      .Show()
                      .CurrentProfile();
@@ -24,7 +24,7 @@ internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
     public void GrantAuthorization(string applicationFullPath, string appName)
     {
         var command =
-            new Netsh2Command()
+            new NetshCommand()
             .AdvFirewall()
             .Firewall()
             .Rule()
@@ -34,7 +34,7 @@ internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
         HandleResult(command.Do());
     }
 
-    private static void HandleResult(Netsh2GeneralResult result)
+    private static void HandleResult(NetshGeneralResult result)
     {
         if (result == null)
             throw new ExceptionEngineRequirementsDidNotExist();
@@ -54,7 +54,7 @@ internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
     public bool HasAuthorization(string applicationFullPath)
     {
         var command =
-             new Netsh2Command()
+             new NetshCommand()
              .AdvFirewall()
              .Firewall()
              .Rule()
@@ -69,7 +69,7 @@ internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
     {
 
         var command =
-             new Netsh2Command()
+             new NetshCommand()
              .AdvFirewall()
              .Firewall()
              .Rule()
@@ -79,7 +79,7 @@ internal class FirewallServiceNetsh2Register : IFirewallServiceRegister
         var result = command.Do();
         var rules = result.Rules.Where(item => item.Program == applicationFullPath).ToList();
         foreach ( var rule in rules )
-        HandleResult(new Netsh2Command()
+        HandleResult(new NetshCommand()
           .AdvFirewall()
           .Firewall()
           .Rule()

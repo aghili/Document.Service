@@ -1,8 +1,8 @@
 ﻿namespace Aghili.Extensions.Service.Install.Register.FirewallServices.netsh2
 {
-    public class Netsh2ShowRuleResult
+    public class NetshShowRuleResult
     {
-        public Netsh2ShowRuleResult(Dictionary<string, string> properties)
+        public NetshShowRuleResult(Dictionary<string, string> properties)
         {
             foreach (var property in properties)
                 Utilities.ModelExtention.SetModelProperty(this, property.Key, property.Value);

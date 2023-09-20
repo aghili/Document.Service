@@ -4,13 +4,13 @@ using System.Collections;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Aghili.Extensions.Service.Install.Register.FirewallServices;
+namespace Aghili.Extensions.Service.Install.Register.FirewallServices.NetFwMgr;
 
-internal class FirewallServiceFwMgrRegister : IFirewallServiceRegister
+internal class FirewallServiceRegister : IFirewallServiceRegister
 {
     private static INetFwMgr? _fwMgr = null;
 
-    public FirewallServiceFwMgrRegister()
+    public FirewallServiceRegister()
     {
     }
 
