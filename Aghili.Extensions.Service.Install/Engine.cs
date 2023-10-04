@@ -2,6 +2,7 @@
 using Aghili.Extensions.Service.Install.Exceptions;
 using Aghili.Extensions.Service.Install.Register;
 using Aghili.Extensions.Service.Install.Utilities;
+using System.ComponentModel;
 using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
@@ -168,9 +169,9 @@ public class Engine
 
             switch ((int)obj)
             {
-                case -1:
+                case ACTION_TERMINATE_PROGRAM:
                     return;
-                case -100:
+                case ACTION_ERROR:
                     try
                     {
                         ServiceStepOutput(new List<ActionArgument>());
@@ -251,6 +252,25 @@ public class Engine
         {
             Console.WriteLine($"\t{argument.Key}\t{argument.Value}");
         }
+
+        Console.WriteLine("\nResult parameters:\n");
+        var type_result = typeof(ServiceResult);
+        foreach (var property in type_result.GetProperties())
+        {
+            var description_attribute = property.GetCustomAttribute(typeof(DescriptionAttribute));
+            string description = "";
+            if(description_attribute != null)
+            {
+                description = $"//{((DescriptionAttribute)description_attribute).Description}";
+            }
+            Console.WriteLine($"\t{property.Name}:\t{property.PropertyType.Name}\t{description}");
+            if(property.PropertyType.IsEnum)
+            {
+                var enum_names = property.PropertyType.GetEnumNames();
+                Console.WriteLine($"\t\t{{{string.Join(",", enum_names)}}}");
+            }
+        }
+        Console.WriteLine();
     }
 
     private string GetAssemblyVersion()

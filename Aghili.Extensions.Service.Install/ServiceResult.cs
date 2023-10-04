@@ -1,11 +1,15 @@
-﻿using System.ServiceProcess;
+﻿using System.ComponentModel;
+using System.ServiceProcess;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Aghili.Extensions.Service.Install;
 
 [Serializable]
 public class ServiceResult
 {
+    [Description("Service running status.")]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public ServiceControllerStatus ServiceRunStatus { set; get; }
 
     public bool ServiceIsInstalled { set; get; }

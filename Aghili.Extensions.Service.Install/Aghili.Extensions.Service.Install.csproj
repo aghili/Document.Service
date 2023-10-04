@@ -12,9 +12,9 @@
 		<Copyright>aghili.mostafa@gmail.com</Copyright>
 		<PackageProjectUrl>https://github.com/aghili/Document.Service</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>firewall;rule;install;windows;service;SC</PackageTags>
+		<PackageTags>firewall;rule;install;windows;service;SC;Net7;Net6;netstandard;console;windowsservice</PackageTags>
 		<AssemblyVersion>1.0</AssemblyVersion>
-		<Version>1.2</Version>
+		<Version>1.2.1</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<RepositoryUrl>https://github.com/aghili/Document.Service</RepositoryUrl>
